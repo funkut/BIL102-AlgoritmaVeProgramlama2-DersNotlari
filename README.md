@@ -21,11 +21,12 @@ Sorumlu oldugunuz operatorler :
   * minus (-) // cıkarma işlemi değil negatifini alan operator (koordinat sistemi ornegi gelsin aklınıza!)
   * ++ veya --
   Binary grubu:
-  Aritmetik operatörler :  +, -, *, /
+  * Aritmetik operatörler :  +, -, *, /
+  * Lojik Operatorler : <, >, <=, >=, ==, =!, ...
+
+ostream (<<), istream (>>), ToString() ve diger fonksiyon aşırı yüklemelerinden sorumlu değilsiniz !!!!
 
 SON DERSTE YAPTIGIMIZ ÖDÜLLÜ ÖRNEĞİN İÇERİĞİNİN TAMAMINDAN SORUMLUSUNUZ. ÇÜNKÜ O ÖRNEKTE YUKARDA BAHSETTİĞİMZİ TÜM KAVRAMLAR DETAYLI OLARAK KULLANILIYOR. ÖDEVİ EN DOĞRU ŞEKİLDE YAPANIN ZORLANMAYACAĞI BİR SINAV OLACAK. 
 
 ŞİMDİDEN BAŞARILAR...
-  Lojik Operatorler : <, >, <=, >=, ==, =!, ...
 
-ostream (<<), istream (>>), ToString() ve diger fonksiyon aşırı yüklemelerinden sorumlu değilsiniz !!!!
