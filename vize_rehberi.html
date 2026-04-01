@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NYP Vize Rehberi</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Sora:wght@400;500;600;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Sora', sans-serif;
+    background: #f0f2f5;
+    color: #212121;
+    padding: 2rem 1rem 4rem;
+  }
+
+  .doc { max-width: 820px; margin: 0 auto; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 55%, #0f3460 100%);
+    border-radius: 18px;
+    padding: 2.2rem 2rem 1.8rem;
+    margin-bottom: 1.8rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -50px; right: -50px;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(229,57,53,0.3) 0%, transparent 70%);
+  }
+  .hero-label {
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #ef9a9a; font-weight: 600; margin-bottom: 8px;
+  }
+  .hero-title {
+    font-size: 28px; font-weight: 700; color: #fff;
+    line-height: 1.3; margin-bottom: 6px;
+  }
+  .hero-sub { font-size: 13px; color: rgba(255,255,255,0.5); }
+
+  /* ── UYARI ── */
+  .warn-box {
+    background: #fff8e1;
+    border-left: 5px solid #f9a825;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 1.6rem;
+    font-size: 13.5px;
+    color: #4e342e;
+    line-height: 1.7;
+  }
+  .warn-box strong { color: #e65100; }
+
+  /* ── SECTION ── */
+  .section {
+    background: #fff;
+    border-radius: 14px;
+    padding: 1.5rem 1.6rem;
+    margin-bottom: 1.4rem;
+    border: 1px solid #e8e8e8;
+  }
+
+  .section-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 1.2rem;
+    padding-bottom: 10px;
+    border-bottom: 2px solid;
+  }
+  .section-num {
+    width: 30px; height: 30px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; flex-shrink: 0;
+  }
+  .section-title { font-size: 16px; font-weight: 700; }
+
+  /* Renk temaları */
+  .t-blue  .section-header { border-color: #1976d2; }
+  .t-blue  .section-num    { background: #e3f2fd; color: #1565c0; }
+  .t-blue  .section-title  { color: #1565c0; }
+
+  .t-green .section-header { border-color: #388e3c; }
+  .t-green .section-num    { background: #e8f5e9; color: #2e7d32; }
+  .t-green .section-title  { color: #2e7d32; }
+
+  .t-orange .section-header { border-color: #e65100; }
+  .t-orange .section-num    { background: #fff3e0; color: #bf360c; }
+  .t-orange .section-title  { color: #bf360c; }
+
+  .t-purple .section-header { border-color: #7b1fa2; }
+  .t-purple .section-num    { background: #f3e5f5; color: #6a1b9a; }
+  .t-purple .section-title  { color: #6a1b9a; }
+
+  .t-red .section-header { border-color: #c62828; }
+  .t-red .section-num    { background: #ffebee; color: #b71c1c; }
+  .t-red .section-title  { color: #b71c1c; }
+
+  /* ── KARTLAR ── */
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .cards.three { grid-template-columns: 1fr 1fr 1fr; }
+
+  .card {
+    background: #fafafa; border: 1px solid #eeeeee;
+    border-radius: 10px; padding: 12px 14px;
+  }
+  .card-icon  { font-size: 20px; margin-bottom: 6px; }
+  .card-title { font-size: 12.5px; font-weight: 600; color: #212121; margin-bottom: 4px; }
+  .card-body  { font-size: 12px; color: #555; line-height: 1.7; }
+  .card-body code {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    background: #f5f5f5; padding: 1px 5px; border-radius: 4px; color: #c62828;
+  }
+
+  /* ── KOD BLOĞU ── */
+  .code-block {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    background: #1e1e2e; color: #cdd6f4;
+    border-radius: 10px; padding: 16px 18px;
+    line-height: 1.75; margin: 12px 0; overflow-x: auto;
+  }
+  .c-kw { color: #cba6f7; }
+  .c-ty { color: #89b4fa; }
+  .c-fn { color: #a6e3a1; }
+  .c-cm { color: #6c7086; font-style: italic; }
+  .c-op { color: #89dceb; }
+
+  /* ── OPERATÖR TABLOSU ── */
+  .op-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .op-box {
+    background: #fafafa; border: 1px solid #eeeeee;
+    border-radius: 10px; padding: 14px;
+  }
+  .op-box-title {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; margin-bottom: 10px;
+  }
+  .op-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 7px 0; border-bottom: 1px solid #f0f0f0;
+    font-size: 12px;
+  }
+  .op-item:last-child { border-bottom: none; }
+  .op-sym {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700;
+    min-width: 36px; text-align: center;
+    background: #f5f5f5; padding: 3px 4px;
+    border-radius: 5px; font-size: 13px; flex-shrink: 0;
+  }
+  .op-desc { color: #555; line-height: 1.5; }
+
+  /* ── NOT ── */
+  .note {
+    font-size: 12.5px; color: #555;
+    background: #f9f9f9; border-left: 3px solid #bdbdbd;
+    padding: 8px 12px; border-radius: 0 8px 8px 0; margin-top: 10px;
+  }
+
+  /* ── SORU KUTUSU ── */
+  .q-box {
+    background: #fffde7; border: 1px solid #ffe082;
+    border-radius: 10px; padding: 12px 16px; margin-top: 12px;
+  }
+  .q-label {
+    font-size: 11px; font-weight: 700; color: #e65100;
+    text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px;
+  }
+  .q-item { font-size: 12.5px; color: #4e342e; line-height: 1.8; }
+  .q-item::before { content: "→ "; color: #f9a825; font-weight: 700; }
+
+  /* ── ÖZET TABLO ── */
+  .summary {
+    background: #fff; border: 1px solid #e8e8e8;
+    border-radius: 14px; padding: 1.4rem 1.6rem; margin-bottom: 1.4rem;
+  }
+  .summary-title { font-size: 14px; font-weight: 600; color: #212121; margin-bottom: 12px; }
+  .summary-row {
+    display: grid; grid-template-columns: auto 1fr auto;
+    gap: 6px 14px; align-items: center;
+    font-size: 12.5px; padding: 5px 0;
+    border-bottom: 1px solid #f5f5f5;
+  }
+  .summary-row:last-child { border-bottom: none; }
+
+  .pill {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    padding: 2px 10px; border-radius: 12px;
+  }
+  .pill-blue   { background: #e3f2fd; color: #1565c0; }
+  .pill-green  { background: #e8f5e9; color: #2e7d32; }
+  .pill-orange { background: #fff3e0; color: #bf360c; }
+  .pill-purple { background: #f3e5f5; color: #6a1b9a; }
+
+  /* ── FİNAL ── */
+  .final-box {
+    background: linear-gradient(135deg, #b71c1c, #880e4f);
+    border-radius: 14px; padding: 1.4rem 1.8rem;
+    color: #fff;
+  }
+  .final-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .final-body  { font-size: 13px; line-height: 1.8; color: rgba(255,255,255,0.88); }
+  .final-body strong { color: #ffcc02; }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-label">Nesneye Yönelik Programlama</div>
+    <div class="hero-title">Vize Sınavı Rehberi</div>
+    <div class="hero-sub">Konu özeti &nbsp;·&nbsp; Soru dağılımı &nbsp;·&nbsp; Kod örnekleri</div>
+  </div>
+
+  <!-- UYARI -->
+  <div class="warn-box">
+    ⚠️ <strong>SON DERSTE YAPILAN ÖDÜLLü ÖRNEK</strong> — İçeriğin tamamından sorumlusunuz.
+    O örnekte aşağıdaki tüm kavramlar detaylıca kullanılıyor.
+    Ödevi en doğru şekilde yapanın zorlanmayacağı bir sınav olacak.
+  </div>
+
+  <!-- 1. TEMEL KAVRAMLAR -->
+  <div class="section t-blue">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div class="section-title">Temel NYP Kavramları</div>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">📦</div>
+        <div class="card-title">Nesne &amp; Sınıf</div>
+        <div class="card-body">Sınıf: veri + davranış şablonu. Nesne: sınıfın bellekteki somut örneği. <code>BankaHesabi h1;</code> → nesne başlatma.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔒</div>
+        <div class="card-title">Kapsülleme</div>
+        <div class="card-body">Veri gizleme. <code>private</code> alanlara doğrudan erişilemez; <code>public</code> metodlar üzerinden erişilir.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏠</div>
+        <div class="card-title">Sınıf İçi Erişim</div>
+        <div class="card-body">Üye metodlar <code>private</code> alanlara doğrudan ulaşır. <code>this-&gt;alan</code> ile nesne kendine başvurur.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🚪</div>
+        <div class="card-title">Sınıf Dışı Erişim</div>
+        <div class="card-body"><code>public</code> metod zorunlu. <code>h1.getGelir()</code> doğru; <code>h1.gelir</code> (<code>private</code> ise) hata verir.</div>
+      </div>
+    </div>
+    <div class="q-box">
+      <div class="q-label">Soru Tipi: Boşluk Doldurma / Kısa Cevap</div>
+      <div class="q-item">private ve public arasındaki fark nedir?</div>
+      <div class="q-item">Bir nesneyi nasıl başlatırsınız?</div>
+      <div class="q-item">this işaretçisi ne anlama gelir?</div>
+    </div>
+  </div>
+
+  <!-- 2. YAPICI / YIKICI -->
+  <div class="section t-green">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div class="section-title">Yapıcı ve Yıkıcı Fonksiyonlar</div>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">🔨</div>
+        <div class="card-title">Default Constructor</div>
+        <div class="card-body">Parametresiz. <code>BankaHesabi h;</code> ile nesne oluşturulursa çağrılır. Alanları sıfırlar.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚙️</div>
+        <div class="card-title">Parametreli Constructor</div>
+        <div class="card-body">Farklı imzalar → aşırı yükleme. <code>Top(int r)</code>, <code>Top(int r, string renk)</code> gibi.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📋</div>
+        <div class="card-title">Copy Constructor</div>
+        <div class="card-body"><code>Hesap(const Hesap&amp; diger)</code>. Nesne kopyalanırken çağrılır. Derin / sığ kopya farkı önemli.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🗑️</div>
+        <div class="card-title">Destructor</div>
+        <div class="card-body"><code>~BankaHesabi()</code>. Nesne kapsam dışına çıkınca otomatik çağrılır. Bellek temizleme.</div>
+      </div>
+    </div>
+
+    <div class="code-block">
+<span class="c-kw">class</span> <span class="c-ty">BankaHesabi</span> {
+<span class="c-kw">private</span>:
+    <span class="c-ty">string</span> hesapNo;
+    <span class="c-ty">double</span> gelir, gider;
+<span class="c-kw">public</span>:
+    <span class="c-fn">BankaHesabi</span>();                        <span class="c-cm">// default constructor</span>
+    <span class="c-fn">BankaHesabi</span>(<span class="c-ty">string</span> no);             <span class="c-cm">// parametreli</span>
+    <span class="c-fn">BankaHesabi</span>(<span class="c-ty">string</span> no, <span class="c-ty">double</span> g); <span class="c-cm">// aşırı yüklenmiş</span>
+    ~<span class="c-fn">BankaHesabi</span>();                       <span class="c-cm">// yıkıcı</span>
+};</div>
+
+    <div class="q-box">
+      <div class="q-label">Soru Tipi: Yapıcı Fonksiyon Tasarımı</div>
+      <div class="q-item">Vadeli / vadesiz / yatırım hesabı — her biri farklı alanlarla başlatılır → farklı yapıcı imzaları tasarlayın</div>
+      <div class="q-item">Top sınıfı örneğindeki gibi: <code style="background:#e8f5e9;color:#2e7d32;padding:1px 5px;border-radius:4px;font-family:monospace;">Top()</code>, <code style="background:#e8f5e9;color:#2e7d32;padding:1px 5px;border-radius:4px;font-family:monospace;">Top(int)</code>, <code style="background:#e8f5e9;color:#2e7d32;padding:1px 5px;border-radius:4px;font-family:monospace;">Top(int, string)</code> yazın</div>
+    </div>
+  </div>
+
+  <!-- 3. FONKSİYON AŞIRI YÜKLEME -->
+  <div class="section t-orange">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div class="section-title">Fonksiyon Aşırı Yüklemesi</div>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">🏦</div>
+        <div class="card-title">Banka Hesabı Örneği</div>
+        <div class="card-body">Farklı hesap türleri farklı <code>initialize()</code> imzası. Vadeli: faiz oranı alır. Vadesiz: almaz. Yatırım: enstrüman türü alır.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎮</div>
+        <div class="card-title">Oyun Motoru Örneği</div>
+        <div class="card-body"><code>spawn(int x, int y)</code>, <code>spawn(Vektor2D pos)</code>, <code>spawn(string sahne)</code> — aynı isim, farklı parametreler.</div>
+      </div>
+    </div>
+    <div class="note">
+      💡 Aşırı yükleme kararını <strong>derleyici</strong> verir: parametreler farklıysa farklı fonksiyon çağrılır. Dönüş tipi tek başına yeterli değildir.
+    </div>
+  </div>
+
+  <!-- 4. OPERATÖR AŞIRI YÜKLEME -->
+  <div class="section t-purple">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div class="section-title">Operatör Aşırı Yüklemesi</div>
+    </div>
+
+    <div class="op-grid">
+      <div class="op-box">
+        <div class="op-box-title" style="color:#7b1fa2;">⚡ Unary Operatörler</div>
+        <div class="op-item">
+          <div class="op-sym" style="color:#c62828;">!</div>
+          <div class="op-desc"><strong>Mantıksal DEĞİL</strong> — hesap geçerli mi? <code style="background:#f5f5f5;padding:1px 4px;border-radius:3px;font-family:monospace;">!h1</code> → bakiye sıfırsa true</div>
+        </div>
+        <div class="op-item">
+          <div class="op-sym" style="color:#1565c0;">−</div>
+          <div class="op-desc"><strong>Tekli eksi</strong> — koordinatın negatifi. <code style="background:#f5f5f5;padding:1px 4px;border-radius:3px;font-family:monospace;">-v</code> → <code style="background:#f5f5f5;padding:1px 4px;border-radius:3px;font-family:monospace;">(-x, -y)</code>. Çıkarma değil!</div>
+        </div>
+        <div class="op-item">
+          <div class="op-sym" style="color:#2e7d32;">++</div>
+          <div class="op-desc"><strong>Artırma</strong> — prefix <code style="background:#f5f5f5;padding:1px 4px;border-radius:3px;font-family:monospace;">++h</code> ve postfix <code style="background:#f5f5f5;padding:1px 4px;border-radius:3px;font-family:monospace;">h++</code> farklı imza! Postfix <code style="background:#f5f5f5;padding:1px 4px;border-radius:3px;font-family:monospace;">int</code> parametresi alır.</div>
+        </div>
+        <div class="op-item">
+          <div class="op-sym" style="color:#2e7d32;">−−</div>
+          <div class="op-desc"><strong>Azaltma</strong> — yukarıdaki ile aynı kural geçerli.</div>
+        </div>
+      </div>
+
+      <div class="op-box">
+        <div class="op-box-title" style="color:#7b1fa2;">🔗 Binary Operatörler</div>
+        <div class="op-item">
+          <div class="op-sym">+</div>
+          <div class="op-desc"><code style="background:#f5f5f5;padding:1px 4px;border-radius:3px;font-family:monospace;">temp.gelir = h1.gelir + h2.gelir</code> — varlık birleştirme</div>
+        </div>
+        <div class="op-item">
+          <div class="op-sym">−</div>
+          <div class="op-desc"><code style="background:#f5f5f5;padding:1px 4px;border-radius:3px;font-family:monospace;">temp.gider = h1.gider - h2.gider</code></div>
+        </div>
+        <div class="op-item">
+          <div class="op-sym">∗</div>
+          <div class="op-desc">Çarpma — örn. faiz hesabı: <code style="background:#f5f5f5;padding:1px 4px;border-radius:3px;font-family:monospace;">h1 * faizOrani</code></div>
+        </div>
+        <div class="op-item">
+          <div class="op-sym">/</div>
+          <div class="op-desc">Bölme — ortalama veya pay/payda senaryosu</div>
+        </div>
+        <div class="op-item">
+          <div class="op-sym">&lt; &gt;</div>
+          <div class="op-desc">Bakiye karşılaştırma: <code style="background:#f5f5f5;padding:1px 4px;border-radius:3px;font-family:monospace;">h1 &lt; h2</code></div>
+        </div>
+        <div class="op-item">
+          <div class="op-sym">==</div>
+          <div class="op-desc">Eşitlik: aynı hesap numarası ve bakiye kontrolü</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block">
+<span class="c-cm">// Banka Hesabı — operator+ (VARLIKLARIM senaryosu)</span>
+<span class="c-ty">BankaHesabi</span> <span class="c-kw">operator</span><span class="c-op">+</span>(<span class="c-kw">const</span> <span class="c-ty">BankaHesabi</span><span class="c-op">&amp;</span> diger) <span class="c-kw">const</span> {
+    <span class="c-ty">BankaHesabi</span> temp;
+    temp.gelir <span class="c-op">=</span> <span class="c-kw">this</span>-&gt;gelir <span class="c-op">+</span> diger.gelir;
+    temp.gider <span class="c-op">=</span> <span class="c-kw">this</span>-&gt;gider <span class="c-op">+</span> diger.gider;
+    <span class="c-kw">return</span> temp;
+}
+
+<span class="c-cm">// Tekli eksi — koordinat örneği</span>
+<span class="c-ty">Koordinat</span> <span class="c-kw">operator</span><span class="c-op">-</span>() <span class="c-kw">const</span> {
+    <span class="c-kw">return</span> <span class="c-ty">Koordinat</span>(<span class="c-op">-</span>x, <span class="c-op">-</span>y);
+}
+
+<span class="c-cm">// Prefix ++</span>
+<span class="c-ty">BankaHesabi</span><span class="c-op">&amp;</span> <span class="c-kw">operator</span><span class="c-op">++</span>() {
+    <span class="c-op">++</span>gelir; <span class="c-kw">return</span> <span class="c-op">*</span><span class="c-kw">this</span>;
+}
+<span class="c-cm">// Postfix ++ (int parametresi prefix'ten ayırt eder)</span>
+<span class="c-ty">BankaHesabi</span> <span class="c-kw">operator</span><span class="c-op">++</span>(<span class="c-ty">int</span>) {
+    <span class="c-ty">BankaHesabi</span> eski <span class="c-op">=</span> <span class="c-op">*</span><span class="c-kw">this</span>;
+    <span class="c-op">++</span>gelir; <span class="c-kw">return</span> eski;
+}</div>
+
+    <div class="q-box">
+      <div class="q-label">Soru Tipi: Operatör Tanımlama</div>
+      <div class="q-item">VARLIKLARIM: h1 + h2 + h3 → tüm hesapların gelir/gider toplamı</div>
+      <div class="q-item">Prefix ++ ile postfix ++ imza farkını gösterin</div>
+      <div class="q-item">Tekli − operatörünü koordinat sınıfında yazın</div>
+    </div>
+  </div>
+
+  <!-- 5. KAPSAM DIŞI -->
+  <div class="section t-red">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div class="section-title">Kapsam Dışı — Sorumlu Değilsiniz ✗</div>
+    </div>
+    <div class="cards three">
+      <div class="card" style="border-color:#ffcdd2;">
+        <div class="card-icon">🚫</div>
+        <div class="card-title" style="color:#b71c1c;">ostream / istream</div>
+        <div class="card-body"><code>&lt;&lt;</code> ve <code>&gt;&gt;</code> operatörleri</div>
+      </div>
+      <div class="card" style="border-color:#ffcdd2;">
+        <div class="card-icon">🚫</div>
+        <div class="card-title" style="color:#b71c1c;">ToString()</div>
+        <div class="card-body">String dönüşüm fonksiyonu</div>
+      </div>
+      <div class="card" style="border-color:#ffcdd2;">
+        <div class="card-icon">🚫</div>
+        <div class="card-title" style="color:#b71c1c;">Diğer özel fonksiyonlar</div>
+        <div class="card-body">Yukarıda belirtilmeyenler</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÖZET -->
+  <div class="summary">
+    <div class="summary-title">📋 Soru Dağılımı Özeti</div>
+    <div class="summary-row">
+      <span class="pill pill-blue">Bölüm 1</span>
+      <span style="color:#424242;">Temel kavramlar — boşluk doldurma / kısa cevap</span>
+      <span style="color:#9e9e9e;font-size:12px;">birkaç soru</span>
+    </div>
+    <div class="summary-row">
+      <span class="pill pill-green">Bölüm 2</span>
+      <span style="color:#424242;">Yapıcı fonksiyon tasarımı — aşırı yüklenmiş yapıcılar</span>
+      <span style="color:#9e9e9e;font-size:12px;">kod yazma</span>
+    </div>
+    <div class="summary-row">
+      <span class="pill pill-orange">Bölüm 3</span>
+      <span style="color:#424242;">Fonksiyon aşırı yüklemesi — banka hesap türleri</span>
+      <span style="color:#9e9e9e;font-size:12px;">kod yazma</span>
+    </div>
+    <div class="summary-row">
+      <span class="pill pill-purple">Bölüm 4</span>
+      <span style="color:#424242;">Operatör aşırı yüklemesi — VARLIKLARIM senaryosu</span>
+      <span style="color:#9e9e9e;font-size:12px;">kod yazma</span>
+    </div>
+  </div>
+
+  <!-- FİNAL -->
+  <div class="final-box">
+    <div class="final-title">🏆 Son Derste Yapılan Ödüllü Örnek</div>
+    <div class="final-body">
+      O örnekte yukarıdaki <strong>tüm kavramlar</strong> bir arada kullanılıyor:<br>
+      kapsülleme &nbsp;·&nbsp; yapıcı aşırı yükleme &nbsp;·&nbsp; fonksiyon aşırı yükleme &nbsp;·&nbsp; unary / binary operatörler.<br><br>
+      <strong>Ödevi en doğru şekilde yapanın zorlanmayacağı bir sınav. Şimdiden başarılar! 🎯</strong>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
