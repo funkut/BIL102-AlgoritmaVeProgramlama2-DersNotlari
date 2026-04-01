@@ -1,4 +1,4 @@
-Vize Konuları ve Soru Dağılımı
+Vize Konuları ve Soru Dağılımı\\
 -- NYP kavramları (Nesne kavramı, kapsülleme, sınıf içi ve sınıf dışı erişim, nesne başlatma) 
 -- Yapıcı ve yıkıcı fonksiyonların kullanımı. Yapıcı fonksiyonun aşırı yüklenmesi
 -- Fonksiyon ve Operatör Aşırı Yüklemesi 
